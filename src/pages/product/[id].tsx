@@ -1,12 +1,17 @@
+import { useState } from "react";
+
 import { GetStaticPropsContext, GetStaticPathsResult } from "next"
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Stripe from "stripe";
+import axios, { AxiosResponse } from "axios";
 
 import { stripe } from "@/lib/stripe";
 import { formatterPrice } from "@/utils/formatterPrice";
 
 import { ProductContainer, ImageContainer, ProductDetails } from "@/styles/pages/product"
+
+
 
 
 interface ProductProps {
@@ -20,10 +25,37 @@ interface ProductProps {
     }
   }
 
+interface IResponseDataFetch{
+    checkoutUrl: string
+}
+
+
 export default function Product({ product }:ProductProps) {
 
-    function handleBuyProduct () {
-        console.log(product.defaultPriceId)
+    const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+
+    async function handleBuyProduct () {
+        
+        try{
+            setIsCreatingCheckoutSession(true)
+            const response: AxiosResponse<IResponseDataFetch> = await axios.post('/api/checkout', {
+                priceId: product.defaultPriceId
+            })
+
+            const { checkoutUrl } = response.data
+
+            // redicionando para a tela de checkout dentro do  Stripe
+            window.location.href = checkoutUrl
+
+
+
+        }catch(error) {
+            
+            setIsCreatingCheckoutSession(false);
+            alert('Error on the process of checkout! Please, try again.');
+            
+        }
+
     }
 
     const { isFallback } = useRouter()
@@ -44,7 +76,12 @@ export default function Product({ product }:ProductProps) {
                 <h1>{product.name}</h1>
                 <span>{product.price}</span>
                 <p>{product.description}</p>
-                <button onClick={handleBuyProduct}>Comprar agora</button>
+                <button 
+                    onClick={handleBuyProduct} 
+                    disabled={isCreatingCheckoutSession}
+                >
+                    Comprar agora
+                </button>
             </ProductDetails>
         </ProductContainer>
     )
