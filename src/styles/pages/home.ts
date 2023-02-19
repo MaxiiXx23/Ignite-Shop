@@ -8,7 +8,7 @@ export const HomeContainer = styled('main', {
     marginLeft: 'auto',
 })
 
-export const Product = styled('a', {
+export const Product = styled('div', {
     background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
     borderRadius: 8,
     minHeight: '41rem',
@@ -43,7 +43,9 @@ export const Product = styled('a', {
         transition: 'all 0.3s ease-in-out',
 
         strong: {
-            fontSize: '$lg'
+            fontSize: '$lg',
+            color: "$gray100",
+            textDecoration: "none"
         },
 
         span: {
