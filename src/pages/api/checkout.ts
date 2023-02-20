@@ -14,9 +14,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
    if(!priceId){
       return res.status(400).json({ error: "priceId doesn't send."})
    }
+   // rota a ser redirecionada caso sucesso.
+   const successUrl = `${process.env.Next_APP}/success?session_id={CHECKOUT_SESSION_ID}`
 
-   const successUrl = `${process.env.Next_APP}/success` // rota a ser redirecionada caso sucesso.
-   const cancelUrl = `${process.env.Next_APP}/` // rota a ser redirecionada caso o cliente cancele.
+   // rota a ser redirecionada caso o cliente cancele.
+   const cancelUrl = `${process.env.Next_APP}/`
 
    const checkoutSession = await stripe.checkout.sessions.create({
       mode: 'payment',

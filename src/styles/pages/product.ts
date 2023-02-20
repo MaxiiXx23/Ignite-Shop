@@ -1,4 +1,4 @@
-import { styled } from "..";
+import { styled, keyframes } from "..";
 
 export const ProductContainer = styled('main', {
    display: 'grid',
@@ -73,3 +73,28 @@ export const ProductDetails = styled('div', {
     }
 
 })
+
+const keyFrameSninner = keyframes({
+    "0%" :{ transform: "rotate(0deg)" },
+    "100%": { transform: "rotate(360deg)" }
+})
+
+export const Spinner = styled('div', {
+    display: "inline-block",
+    width: 80,
+    height: 80,
+
+    "&:after": {
+        content: " ",
+        display: "block",
+        width: 64,
+        height: 64,
+        margin: 8,
+        borderRadius: "50%",
+        border: "6px solid $green500",
+        borderColor: "$green500 transparent $green500 transparent",
+        animation: "spin 1.2s linear infinite",
+    },
+
+    animation: `${keyFrameSninner}`,
+}) 

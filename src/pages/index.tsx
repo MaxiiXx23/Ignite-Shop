@@ -1,6 +1,7 @@
 import { GetServerSidePropsResult } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import Head from "next/head"
 
 import Stripe from "stripe"
 import { useKeenSlider } from "keen-slider/react"
@@ -11,6 +12,7 @@ import { stripe } from "@/lib/stripe"
 import { formatterPrice } from "@/utils/formatterPrice"
 
 import { HomeContainer, Product } from "@/styles/pages/home"
+
 
 interface HomeProps {
   products: {
@@ -31,6 +33,10 @@ export default function Home({ products }: HomeProps) {
   })
 
   return (
+   <>
+    <Head>
+      <title>Home | Ignite Shop</title>
+    </Head>
     <HomeContainer ref={sliderRef} className="keen-slider">
       {
         products.map(product => {
@@ -55,6 +61,7 @@ export default function Home({ products }: HomeProps) {
         })
       }
     </HomeContainer>
+   </>
   )
 }
 
