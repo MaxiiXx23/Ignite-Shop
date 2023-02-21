@@ -19,7 +19,7 @@ import {
   Product,
   WrapperInfos,
 } from '@/styles/pages/home'
-import { ShoppingCartContainer } from '@/styles/pages/app'
+import { ShoppingCartContainer } from '@/styles/pages/defaultLayout'
 import { Handbag } from 'phosphor-react'
 
 interface HomeProps {

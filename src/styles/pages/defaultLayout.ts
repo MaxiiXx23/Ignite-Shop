@@ -23,6 +23,7 @@ export const Header = styled('header', {
 
 export const ShoppingCartContainer = styled('button', {
   display: 'flex',
+  position: 'relative',
   alignItems: 'center',
   justifyContent: 'center',
   padding: '0.75rem',
@@ -42,6 +43,37 @@ export const ShoppingCartContainer = styled('button', {
         color: '$white',
       },
     },
+  },
+})
+
+export const CountCartContainer = styled('div', {
+  width: '2rem',
+  height: '2rem',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '1rem',
+  position: 'absolute',
+  borderRadius: '50%',
+  backgroundColor: '$gray900',
+  marginTop: -40,
+  right: -12,
+})
+
+export const WrapperNumber = styled('div', {
+  width: '1.5rem',
+  height: '1.5rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '0.5rem',
+  borderRadius: '50%',
+  backgroundColor: '$green500',
+
+  strong: {
+    fontSize: '$md',
+    lineHeight: 1.6,
+    color: '$white',
   },
 })
 
