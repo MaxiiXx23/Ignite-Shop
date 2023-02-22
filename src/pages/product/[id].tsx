@@ -28,7 +28,8 @@ interface ProductProps {
     id: string
     name: string
     imageUrl: string
-    price: string
+    price: number
+    priceFormatted: string
     description: string
     defaultPriceId: string
   }
@@ -91,7 +92,7 @@ export default function Product({ product }: ProductProps) {
 
         <ProductDetails>
           <NameProduct>{product.name}</NameProduct>
-          <Price>{product.price}</Price>
+          <Price>{product.priceFormatted}</Price>
           <Description>{product.description}</Description>
           <BtnAddCart
             onClick={handleAddProductCart}
@@ -140,7 +141,8 @@ export async function getStaticProps({
         id: product.id,
         name: product.name,
         imageUrl: product.images[0],
-        price: priceFormatted,
+        price: price.unit_amount,
+        priceFormatted,
         description: product.description,
         defaultPriceId: price.id,
       },

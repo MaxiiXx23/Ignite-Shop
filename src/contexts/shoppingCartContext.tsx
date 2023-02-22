@@ -10,6 +10,7 @@ import {
 interface IShoppingCartContext {
   productsSelected: IProduct[]
   countCart: number
+  totalValue: number
   addProductCart: (produc: IProduct) => void
   removeProductCart: (productId: string) => void
 }
@@ -26,6 +27,7 @@ export function ShoppingCartProvider({ children }: IShoppingCartProvider) {
   const [cartState, dispatch] = useReducer(shoppingCartReducer, {
     productsSelected: [],
     countCart: 0,
+    totalValue: 0,
   })
 
   function addProductCart(product: IProduct) {
@@ -38,13 +40,14 @@ export function ShoppingCartProvider({ children }: IShoppingCartProvider) {
     dispatch(changeCountCartAction())
   }
 
-  const { countCart, productsSelected } = cartState
+  const { countCart, productsSelected, totalValue } = cartState
 
   return (
     <ShoppingCartContext.Provider
       value={{
         productsSelected,
         countCart,
+        totalValue,
         addProductCart,
         removeProductCart,
       }}

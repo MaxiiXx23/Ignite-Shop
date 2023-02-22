@@ -37,6 +37,7 @@ import {
 } from '@/styles/pages/defaultLayout'
 
 import { ShoppingCartContext } from '@/contexts/shoppingCartContext'
+import { formatterPrice } from '@/utils/formatterPrice'
 
 interface IDefaultLayoutProps {
   children: ReactNode
@@ -44,7 +45,7 @@ interface IDefaultLayoutProps {
 
 export function DefaultLayout({ children }: IDefaultLayoutProps) {
   const [isOpenMenuDrawer, setIsOpenMenuDrawer] = useState(false)
-  const { countCart, productsSelected, removeProductCart } =
+  const { countCart, totalValue, productsSelected, removeProductCart } =
     useContext(ShoppingCartContext)
 
   function handleOpenMenuDrawer() {
@@ -56,6 +57,8 @@ export function DefaultLayout({ children }: IDefaultLayoutProps) {
   }
 
   const textCountCart = countCart === 1 ? `1 item` : `${countCart} itens`
+
+  const totalValueFormatted = formatterPrice(totalValue)
 
   return (
     <Container>
@@ -100,7 +103,7 @@ export function DefaultLayout({ children }: IDefaultLayoutProps) {
                     </WrapperImage>
                     <ContainerInfos>
                       <NameProduct>{product.name}</NameProduct>
-                      <Price>{product.price}</Price>
+                      <Price>{product.priceFormatted}</Price>
                       <BtnRemove
                         onClick={() => handleRemoveItemCart(product.id)}
                       >
@@ -118,7 +121,7 @@ export function DefaultLayout({ children }: IDefaultLayoutProps) {
               </WrapperQuantity>
               <WrapperTotalValue>
                 <TextTotalValue>Valor total</TextTotalValue>
-                <TotalValue>R$ 69,95</TotalValue>
+                <TotalValue>{totalValueFormatted}</TotalValue>
               </WrapperTotalValue>
               <ButtonConfirm>Finalizar compra</ButtonConfirm>
             </ContainerDetailsCart>

@@ -98,9 +98,7 @@ export async function getServerSideProps(): Promise<
   const products = response.data.map((product) => {
     const price = product.default_price as Stripe.Price
 
-    const priceFinal = price.unit_amount! / 100
-
-    const priceFormatted = formatterPrice(priceFinal)
+    const priceFormatted = formatterPrice(Number(price.unit_amount))
 
     return {
       id: product.id,

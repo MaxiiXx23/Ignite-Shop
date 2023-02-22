@@ -2,14 +2,16 @@ export interface IProduct {
   id: string
   name: string
   imageUrl: string
-  price: string
+  priceFormatted: string
+  price: number,
   description: string
   defaultPriceId: string
 }
 
 interface ICartStateReducer {
   productsSelected: IProduct[]
-  countCart: number
+  countCart: number,
+  totalValue: number
 }
 
 export enum ActionTypes {
@@ -53,11 +55,14 @@ export function shoppingCartReducer(
         return acc = acc +1
       }, 0)
 
-      console.log(state.productsSelected)
-
+      const totalValue = state.productsSelected.reduce((accPrice, currentValue) => {
+        return accPrice += currentValue.price
+      }, 0)
+      
       return {
         ...state,
-        countCart: totalItemsAdded
+        countCart: totalItemsAdded,
+        totalValue: totalValue
       }
     }
 

@@ -141,14 +141,23 @@ export const Content = styled('div', {
 })
 
 export const ListProducts = styled('ul', {
+  height: '21.625rem',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
   flexDirection: 'column',
   gap: '1.5rem',
-  marginTop: '2rem',
 
   listStyleType: 'none',
+
+  overflowY: 'auto',
+  '&::-webkit-scrollbar': {
+    width: 1,
+  },
+  '&::-webkit-scrollbar-thumb': {
+    borderRadius: 6,
+    backgroundColor: '$gray100',
+  },
 })
 
 export const Item = styled('li', {
@@ -164,10 +173,8 @@ export const WrapperImage = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  maxWidth: '36rem',
   background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
   borderRadius: 8,
-  padding: '0.25rem',
 
   img: {
     objectFit: 'cover',
