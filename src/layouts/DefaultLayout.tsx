@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { Handbag, X } from 'phosphor-react'
+import axios, { AxiosResponse } from 'axios'
 
 import LogoSVG from '@/assets/Logo.svg'
 
@@ -42,9 +43,16 @@ import { formatterPrice } from '@/utils/formatterPrice'
 interface IDefaultLayoutProps {
   children: ReactNode
 }
+interface IResponseDataFetch {
+  checkoutUrl: string
+}
 
 export function DefaultLayout({ children }: IDefaultLayoutProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
+
   const [isOpenMenuDrawer, setIsOpenMenuDrawer] = useState(false)
+
   const { countCart, totalValue, productsSelected, removeProductCart } =
     useContext(ShoppingCartContext)
 
@@ -54,6 +62,34 @@ export function DefaultLayout({ children }: IDefaultLayoutProps) {
 
   function handleRemoveItemCart(productId: string) {
     removeProductCart(productId)
+  }
+
+  async function handleBuyProducts() {
+    try {
+      setIsCreatingCheckoutSession(true)
+
+      const productsCheckout = productsSelected.map((product) => {
+        return {
+          price: product.defaultPriceId,
+          quantity: 1,
+        }
+      })
+
+      const response: AxiosResponse<IResponseDataFetch> = await axios.post(
+        '/api/checkout',
+        {
+          products: productsCheckout,
+        },
+      )
+
+      const { checkoutUrl } = response.data
+
+      // redicionando para a tela de checkout dentro do  Stripe
+      window.location.href = checkoutUrl
+    } catch (error) {
+      setIsCreatingCheckoutSession(false)
+      alert('Error on the process of checkout! Please, try again.')
+    }
   }
 
   const textCountCart = countCart === 1 ? `1 item` : `${countCart} itens`
@@ -123,7 +159,12 @@ export function DefaultLayout({ children }: IDefaultLayoutProps) {
                 <TextTotalValue>Valor total</TextTotalValue>
                 <TotalValue>{totalValueFormatted}</TotalValue>
               </WrapperTotalValue>
-              <ButtonConfirm>Finalizar compra</ButtonConfirm>
+              <ButtonConfirm
+                onClick={handleBuyProducts}
+                disabled={isCreatingCheckoutSession}
+              >
+                Finalizar compra
+              </ButtonConfirm>
             </ContainerDetailsCart>
           </Content>
         </ContainerMenuDrawer>

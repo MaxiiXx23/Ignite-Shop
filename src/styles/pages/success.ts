@@ -37,17 +37,24 @@ export const SuccessContainer = styled('section', {
   },
 })
 
+export const WrapperImagesProducts = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'row',
+  marginTop: '4rem',
+  marginLeft: '2rem',
+})
+
 export const ImageContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: '8.125rem',
-  height: '9.0625rem',
-  padding: '1.25rem 0.5rem',
+  width: '8.75rem',
+  height: '8.75rem',
   background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
-  borderRadius: 8,
-  marginTop: '4rem',
-
+  borderRadius: '50%',
+  marginLeft: -50,
   img: {
     objectFit: 'cover',
   },

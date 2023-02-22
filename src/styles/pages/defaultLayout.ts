@@ -280,7 +280,12 @@ export const ButtonConfirm = styled('button', {
   backgroundColor: '$green500',
   transition: '0.3s',
 
-  '&:hover': {
+  '&:not(:disabled):hover': {
     backgroundColor: '$green300',
+  },
+
+  '&:disabled': {
+    opacity: 0.6,
+    cursor: 'not-allowed',
   },
 })

@@ -6,13 +6,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { priceId } = req.body // foreign key do price/preço referente ao produto
+  const { products } = req.body // foreign key do price/preço referente ao produto
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed.' })
   }
 
-  if (!priceId) {
+  if (!products) {
     return res.status(400).json({ error: "priceId doesn't send." })
   }
   // rota a ser redirecionada caso sucesso.
@@ -23,12 +23,7 @@ export default async function handler(
 
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: 'payment',
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
+    line_items: [...products],
     success_url: successUrl,
     cancel_url: cancelUrl,
   })

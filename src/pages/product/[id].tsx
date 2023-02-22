@@ -1,11 +1,10 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { GetStaticPropsContext, GetStaticPathsResult } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Stripe from 'stripe'
-// import axios, { AxiosResponse } from 'axios'
 
 import { ShoppingCartContext } from '@/contexts/shoppingCartContext'
 
@@ -35,40 +34,12 @@ interface ProductProps {
   }
 }
 
-interface IResponseDataFetch {
-  checkoutUrl: string
-}
-
 export default function Product({ product }: ProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
-
-  const { addProductCart } = useContext(ShoppingCartContext)
-
-  /*
-  async function handleBuyProduct() {
-    try {
-      setIsCreatingCheckoutSession(true)
-      const response: AxiosResponse<IResponseDataFetch> = await axios.post(
-        '/api/checkout',
-        {
-          priceId: product.defaultPriceId,
-        },
-      )
-
-      const { checkoutUrl } = response.data
-
-      // redicionando para a tela de checkout dentro do  Stripe
-      window.location.href = checkoutUrl
-    } catch (error) {
-      setIsCreatingCheckoutSession(false)
-      alert('Error on the process of checkout! Please, try again.')
-    }
-  } 
-
-  */
+  const { addProductCart, productsSelected } = useContext(ShoppingCartContext)
+  const [productIsSelected, setProductIsSelected] = useState(false)
 
   function handleAddProductCart() {
+    setProductIsSelected(true)
     addProductCart(product)
   }
 
@@ -79,6 +50,17 @@ export default function Product({ product }: ProductProps) {
   }
 
   const titlePage = `${product.name} | Ignite Shop`
+
+  useEffect(() => {
+    const productAlreadySelected = productsSelected.find(
+      (productSelected) => productSelected.id === product.id,
+    )
+    if (productAlreadySelected) {
+      setProductIsSelected(true)
+    } else {
+      setProductIsSelected(false)
+    }
+  }, [productsSelected, product.id])
 
   return (
     <>
@@ -96,7 +78,7 @@ export default function Product({ product }: ProductProps) {
           <Description>{product.description}</Description>
           <BtnAddCart
             onClick={handleAddProductCart}
-            disabled={isCreatingCheckoutSession}
+            disabled={productIsSelected}
           >
             Colocar na sacola
           </BtnAddCart>
