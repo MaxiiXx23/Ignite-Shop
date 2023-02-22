@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { GetStaticPropsContext, GetStaticPathsResult } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Stripe from 'stripe'
-import axios, { AxiosResponse } from 'axios'
+// import axios, { AxiosResponse } from 'axios'
+
+import { ShoppingCartContext } from '@/contexts/shoppingCartContext'
 
 import { stripe } from '@/lib/stripe'
 import { formatterPrice } from '@/utils/formatterPrice'
@@ -40,6 +42,9 @@ export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
 
+  const { addProductCart } = useContext(ShoppingCartContext)
+
+  /*
   async function handleBuyProduct() {
     try {
       setIsCreatingCheckoutSession(true)
@@ -58,6 +63,12 @@ export default function Product({ product }: ProductProps) {
       setIsCreatingCheckoutSession(false)
       alert('Error on the process of checkout! Please, try again.')
     }
+  } 
+
+  */
+
+  function handleAddProductCart() {
+    addProductCart(product)
   }
 
   const { isFallback } = useRouter()
@@ -83,7 +94,7 @@ export default function Product({ product }: ProductProps) {
           <Price>{product.price}</Price>
           <Description>{product.description}</Description>
           <BtnAddCart
-            onClick={handleBuyProduct}
+            onClick={handleAddProductCart}
             disabled={isCreatingCheckoutSession}
           >
             Colocar na sacola
@@ -121,9 +132,7 @@ export async function getStaticProps({
 
   const price = product.default_price as Stripe.Price
 
-  const priceConverted = Number(price.unit_amount) / 100
-
-  const priceFormatted = formatterPrice(priceConverted)
+  const priceFormatted = formatterPrice(Number(price.unit_amount))
 
   return {
     props: {

@@ -36,8 +36,6 @@ import {
   WrapperTotalValue,
 } from '@/styles/pages/defaultLayout'
 
-import ImageTestProduct from '@/assets/t-shirt1.png'
-
 import { ShoppingCartContext } from '@/contexts/shoppingCartContext'
 
 interface IDefaultLayoutProps {
@@ -46,13 +44,18 @@ interface IDefaultLayoutProps {
 
 export function DefaultLayout({ children }: IDefaultLayoutProps) {
   const [isOpenMenuDrawer, setIsOpenMenuDrawer] = useState(false)
-  const { countCart } = useContext(ShoppingCartContext)
+  const { countCart, productsSelected, removeProductCart } =
+    useContext(ShoppingCartContext)
 
   function handleOpenMenuDrawer() {
     setIsOpenMenuDrawer((state) => !state)
   }
 
-  // console.log(countCart)
+  function handleRemoveItemCart(productId: string) {
+    removeProductCart(productId)
+  }
+
+  const textCountCart = countCart === 1 ? `1 item` : `${countCart} itens`
 
   return (
     <Container>
@@ -84,21 +87,34 @@ export function DefaultLayout({ children }: IDefaultLayoutProps) {
           </WrapperTitle>
           <Content>
             <ListProducts>
-              <Item>
-                <WrapperImage>
-                  <Image src={ImageTestProduct} alt="" width={93} height={93} />
-                </WrapperImage>
-                <ContainerInfos>
-                  <NameProduct>Camiseta Beyond the Limits</NameProduct>
-                  <Price>R$ 69,95</Price>
-                  <BtnRemove>Remover</BtnRemove>
-                </ContainerInfos>
-              </Item>
+              {productsSelected.map((product) => {
+                return (
+                  <Item key={product.id}>
+                    <WrapperImage>
+                      <Image
+                        src={product.imageUrl}
+                        alt=""
+                        width={93}
+                        height={93}
+                      />
+                    </WrapperImage>
+                    <ContainerInfos>
+                      <NameProduct>{product.name}</NameProduct>
+                      <Price>{product.price}</Price>
+                      <BtnRemove
+                        onClick={() => handleRemoveItemCart(product.id)}
+                      >
+                        Remover
+                      </BtnRemove>
+                    </ContainerInfos>
+                  </Item>
+                )
+              })}
             </ListProducts>
             <ContainerDetailsCart>
               <WrapperQuantity>
                 <TextQuantity>Quantidade</TextQuantity>
-                <TextQuantityItems>1 item</TextQuantityItems>
+                <TextQuantityItems>{textCountCart}</TextQuantityItems>
               </WrapperQuantity>
               <WrapperTotalValue>
                 <TextTotalValue>Valor total</TextTotalValue>

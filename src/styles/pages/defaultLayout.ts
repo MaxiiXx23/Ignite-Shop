@@ -120,7 +120,7 @@ export const WrapperTitle = styled('div', {
   width: '100%',
   display: 'flex',
   alignItems: 'center',
-  paddingLeft: '3rem',
+  paddingLeft: '1.5rem',
 })
 
 export const TitleMenuDrawer = styled('strong', {
@@ -132,6 +132,7 @@ export const TitleMenuDrawer = styled('strong', {
 
 export const Content = styled('div', {
   height: '100%',
+  width: '100%',
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
@@ -174,6 +175,7 @@ export const WrapperImage = styled('div', {
 })
 
 export const ContainerInfos = styled('div', {
+  width: '100%',
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'center',

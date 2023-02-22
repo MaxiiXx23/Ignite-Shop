@@ -1,9 +1,17 @@
 import { ReactNode, createContext, useReducer } from 'react'
 
-import { shoppingCartReducer } from '@/reducers/shoppingCartReducer'
+import { shoppingCartReducer, IProduct } from '@/reducers/shoppingCartReducer'
+import {
+  addNewProductAction,
+  changeCountCartAction,
+  removeProductCartAction,
+} from '@/reducers/shoppingCartReducer/actions'
 
 interface IShoppingCartContext {
+  productsSelected: IProduct[]
   countCart: number
+  addProductCart: (produc: IProduct) => void
+  removeProductCart: (productId: string) => void
 }
 
 interface IShoppingCartProvider {
@@ -17,15 +25,28 @@ export const ShoppingCartContext = createContext<IShoppingCartContext>(
 export function ShoppingCartProvider({ children }: IShoppingCartProvider) {
   const [cartState, dispatch] = useReducer(shoppingCartReducer, {
     productsSelected: [],
-    countCart: 5,
+    countCart: 0,
   })
 
-  const { countCart } = cartState
+  function addProductCart(product: IProduct) {
+    dispatch(addNewProductAction(product))
+    dispatch(changeCountCartAction())
+  }
+
+  function removeProductCart(productId: string) {
+    dispatch(removeProductCartAction(productId))
+    dispatch(changeCountCartAction())
+  }
+
+  const { countCart, productsSelected } = cartState
 
   return (
     <ShoppingCartContext.Provider
       value={{
+        productsSelected,
         countCart,
+        addProductCart,
+        removeProductCart,
       }}
     >
       {children}
