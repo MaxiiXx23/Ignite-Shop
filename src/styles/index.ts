@@ -29,4 +29,14 @@ export const {
       '2xl': '2rem',
     },
   },
+  media: {
+    initial: '(max-width: 1440px)',
+    laptopM: '(max-width: 1024px)',
+    tabletL: '(max-width: 768px)',
+    tabletM: '(max-width: 660px)',
+    tabletS: '(max-width: 600px)',
+    mobileL: '(max-width: 425px)',
+    mobileM: '(max-width: 375px)',
+    mobileS: '(max-width: 320px)',
+  },
 })

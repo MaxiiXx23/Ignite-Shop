@@ -11,6 +11,9 @@ export const SuccessContainer = styled('section', {
   h1: {
     fontSize: '$2xl',
     color: '$gray100',
+    '@mobileM': {
+      fontSize: '$xl',
+    },
   },
 
   p: {
@@ -20,6 +23,10 @@ export const SuccessContainer = styled('section', {
     maxHeight: '35rem',
     textAlign: 'center',
     marginTop: '2rem',
+
+    '@mobileM': {
+      fontSize: '$lg',
+    },
   },
 
   a: {
@@ -57,5 +64,9 @@ export const ImageContainer = styled('div', {
   marginLeft: -50,
   img: {
     objectFit: 'cover',
+  },
+
+  '@tabletS': {
+    width: '100%',
   },
 })

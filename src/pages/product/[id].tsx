@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { GetStaticPropsContext, GetStaticPathsResult } from 'next'
+import { GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import Stripe from 'stripe'
 
 import { ShoppingCartContext } from '@/contexts/shoppingCartContext'
@@ -15,7 +14,6 @@ import {
   ProductContainer,
   ImageContainer,
   ProductDetails,
-  Spinner,
   NameProduct,
   Price,
   Description,
@@ -41,12 +39,6 @@ export default function Product({ product }: ProductProps) {
   function handleAddProductCart() {
     setProductIsSelected(true)
     addProductCart(product)
-  }
-
-  const { isFallback } = useRouter()
-
-  if (isFallback) {
-    return <Spinner />
   }
 
   const titlePage = `${product.name} | Ignite Shop`
@@ -88,25 +80,15 @@ export default function Product({ product }: ProductProps) {
   )
 }
 
-interface IGetStaticPropsResult {
+interface IGetServerSidePropsResult {
   props: {}
-  revalidate: number
 }
 
-export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-  return {
-    paths: [
-      {
-        params: { id: 'prod_NMX9sDvIu6pYOg' },
-      },
-    ],
-    fallback: true,
-  }
-}
-
-export async function getStaticProps({
+export async function getServerSideProps({
   params,
-}: GetStaticPropsContext<{ id: string }>): Promise<IGetStaticPropsResult> {
+}: GetServerSidePropsContext<{
+  id: string
+}>): Promise<IGetServerSidePropsResult> {
   const productId = params!.id
 
   const product = await stripe.products.retrieve(productId, {
@@ -129,6 +111,5 @@ export async function getStaticProps({
         defaultPriceId: price.id,
       },
     },
-    revalidate: 60 * 60 * 1, // 1 hour to revalidate
   }
 }

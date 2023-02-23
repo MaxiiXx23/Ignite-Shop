@@ -8,6 +8,38 @@ export const ProductContainer = styled('main', {
   gap: '4rem',
   maxWidth: '73.75rem',
   margin: '0 auto',
+  overflowY: 'auto',
+  '@laptopM': {
+    gridTemplateColumns: '25rem 25rem',
+  },
+  '@tabletL': {
+    gridTemplateColumns: '18rem 18rem',
+  },
+  '@tabletM': {
+    width: '100%',
+    padding: '0.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    gridTemplateColumns: '',
+  },
+  '@tabletS': {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    gridTemplateColumns: '',
+  },
+  '@mobileL': {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    gridTemplateColumns: '',
+  },
 })
 
 export const ImageContainer = styled('div', {
@@ -20,19 +52,63 @@ export const ImageContainer = styled('div', {
   borderRadius: 8,
   padding: '0.25rem',
 
+  '@tabletL': {
+    height: '30rem',
+  },
+
+  '@tabletS': {
+    marginTop: '10rem',
+    height: '30rem',
+  },
+
+  '@mobileL': {
+    marginTop: '10rem',
+    height: '30rem',
+  },
+
   img: {
     objectFit: 'cover',
   },
 })
 
 export const ProductDetails = styled('div', {
+  width: '100%',
   display: 'flex',
   flexDirection: 'column',
+
+  '@tabletL': {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  '@tabletS': {
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  '@mobileL': {
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })
 
 export const NameProduct = styled('h1', {
   fontSize: '$2xl',
   color: '$gray300',
+
+  '@tabletM': {
+    textAlign: 'center',
+    fontSize: '$xl',
+  },
+  '@tabletS': {
+    textAlign: 'center',
+    fontSize: '$xl',
+  },
+  '@mobileL': {
+    textAlign: 'center',
+  },
 })
 
 export const Price = styled('span', {
@@ -40,6 +116,18 @@ export const Price = styled('span', {
   display: 'block',
   fontSize: '$2xl',
   color: '$gray300',
+
+  '@tabletM': {
+    textAlign: 'center',
+    fontSize: '$xl',
+  },
+  '@tabletS': {
+    textAlign: 'center',
+    fontSize: '$xl',
+  },
+  '@mobileL': {
+    textAlign: 'center',
+  },
 })
 
 export const Description = styled('p', {
@@ -47,6 +135,19 @@ export const Description = styled('p', {
   fontSize: '$md',
   lineHeight: 1.6,
   color: '$gray300',
+
+  '@tabletM': {
+    textAlign: 'center',
+    fontSize: '1rem',
+  },
+  '@tabletS': {
+    textAlign: 'center',
+    fontSize: '1rem',
+  },
+  '@mobileL': {
+    textAlign: 'center',
+    fontSize: '1rem',
+  },
 })
 
 export const BtnAddCart = styled('button', {
@@ -78,6 +179,13 @@ const keyFrameSninner = keyframes({
   '100%': { transform: 'rotate(360deg)' },
 })
 
+export const ContainerSpinner = styled('div', {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+})
+
 export const Spinner = styled('div', {
   display: 'inline-block',
   width: 80,
@@ -92,7 +200,7 @@ export const Spinner = styled('div', {
     borderRadius: '50%',
     border: '6px solid $green500',
     borderColor: '$green500 transparent $green500 transparent',
-    animation: 'spin 1.2s linear infinite',
+    animation: `${keyFrameSninner} 1.2s infinite`,
   },
 
   animation: `${keyFrameSninner}`,

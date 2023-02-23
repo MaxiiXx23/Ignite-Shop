@@ -1,4 +1,4 @@
-import { keyframes, styled } from '..'
+import { styled } from '..'
 
 export const Container = styled('main', {
   display: 'flex',
@@ -13,12 +13,26 @@ export const Container = styled('main', {
 export const Header = styled('header', {
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  width: '100%',
 
   padding: '2rem 0',
-  width: '100%',
   maxWidth: '73.75rem',
   margin: '0 auto',
+
+  variants: {
+    spacing: {
+      center: {
+        justifyContent: 'center',
+      },
+      between: {
+        justifyContent: 'space-between',
+      },
+    },
+  },
+
+  '@laptopM': {
+    width: '90%',
+  },
 })
 
 export const ShoppingCartContainer = styled('button', {
@@ -79,10 +93,10 @@ export const WrapperNumber = styled('div', {
 
 // Menu Drawer
 
-const animationDrawer = keyframes({
-  '0%': { transform: 'translateX(100%)' },
-  '100%': { transform: 'translateX(0%)' },
-})
+// const animationDrawer = keyframes({
+//   '0%': { transform: 'translateX(100%)' },
+//   '100%': { transform: 'translateX(0%)' },
+// })
 
 export const ContainerMenuDrawer = styled('div', {
   height: '100%',
@@ -97,7 +111,11 @@ export const ContainerMenuDrawer = styled('div', {
   position: 'absolute',
   right: 0,
 
-  animation: `${animationDrawer} 1s`,
+  // animation: `${animationDrawer} 1s ease-out`,
+
+  '@tabletM': {
+    width: '100%',
+  },
 })
 
 export const WrapperBtnClose = styled('div', {
@@ -194,12 +212,19 @@ export const NameProduct = styled('span', {
   fontSize: '$md',
   lineHeight: 1.6,
   color: '$gray300',
+
+  '@mobileM': {
+    fontSize: '0.75rem',
+  },
 })
 
 export const Price = styled('strong', {
   fontSize: '$md',
   lineHeight: 1.6,
   color: '$gray100',
+  '@mobileM': {
+    fontSize: '1rem',
+  },
 })
 
 export const BtnRemove = styled('strong', {
@@ -260,6 +285,10 @@ export const TotalValue = styled('strong', {
   fontSize: '$xl',
   lineHeight: 1.4,
   color: '$gray100',
+
+  '@mobileM': {
+    fontSize: '$lg',
+  },
 })
 
 export const ButtonConfirm = styled('button', {

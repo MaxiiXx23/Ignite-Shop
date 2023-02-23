@@ -1,7 +1,8 @@
-import { ReactNode, useState, useContext } from 'react'
+import { ReactNode, useState, useContext, useEffect } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { Handbag, X } from 'phosphor-react'
 import axios, { AxiosResponse } from 'axios'
@@ -51,6 +52,10 @@ export function DefaultLayout({ children }: IDefaultLayoutProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
 
+  const [isVisibleShoppingCart, setIsVisibleShoppingCart] = useState(true)
+
+  const { pathname } = useRouter()
+
   const [isOpenMenuDrawer, setIsOpenMenuDrawer] = useState(false)
 
   const { countCart, totalValue, productsSelected, removeProductCart } =
@@ -96,23 +101,33 @@ export function DefaultLayout({ children }: IDefaultLayoutProps) {
 
   const totalValueFormatted = formatterPrice(totalValue)
 
+  useEffect(() => {
+    if (pathname === '/success') {
+      setIsVisibleShoppingCart(false)
+    } else {
+      setIsVisibleShoppingCart(true)
+    }
+  }, [pathname])
+
   return (
     <Container>
-      <Header>
+      <Header spacing={isVisibleShoppingCart ? 'between' : 'center'}>
         <Link href="/" prefetch={false}>
           <Image src={LogoSVG} alt="" />
         </Link>
-        <ShoppingCartContainer
-          onClick={handleOpenMenuDrawer}
-          colorVariant="gray"
-        >
-          <CountCartContainer>
-            <WrapperNumber>
-              <strong>{countCart}</strong>
-            </WrapperNumber>
-          </CountCartContainer>
-          <Handbag size={24} fill="bold" />
-        </ShoppingCartContainer>
+        {isVisibleShoppingCart ? (
+          <ShoppingCartContainer
+            onClick={handleOpenMenuDrawer}
+            colorVariant="gray"
+          >
+            <CountCartContainer>
+              <WrapperNumber>
+                <strong>{countCart}</strong>
+              </WrapperNumber>
+            </CountCartContainer>
+            <Handbag size={24} fill="bold" />
+          </ShoppingCartContainer>
+        ) : null}
       </Header>
       {isOpenMenuDrawer ? (
         <ContainerMenuDrawer>
