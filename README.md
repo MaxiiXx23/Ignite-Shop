@@ -1,5 +1,5 @@
 ### Desafio 04/Projeto 04 - Módulo 04 - Trilha ReactJS Ignite 2022/2023
-### ***Github-Blog***
+### ***Ignite-Shop***
 #### Sobre o projeto:
  * Ignite-Shop é um desafio/projeto desenvolvido com Next.js com objetivo de criar uma loja de camisetas com a funcionalidade de compra utilizando a API Stripe.
 
